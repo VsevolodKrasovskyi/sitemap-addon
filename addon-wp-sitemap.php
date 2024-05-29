@@ -2,22 +2,34 @@
 /*
 Plugin Name: WP Sitemap Addon
 Description: Group pages for your sitemap by simply inserting a simple shortcode [wp_sitemap_group_pages parent="{page_id}"] or [wp_sitemap_parent_no_children]
-Version: 1.2
+Version: 1.3
 Author: Netpeak 
 Author URI: https://netpeak.bg
 */
 
 
-if ( !class_exists( 'Puc_v4_Factory' ) ) {
-    require_once plugin_dir_path( __FILE__ ) . 'includes/plugin-update-checker-master/plugin-update-checker.php';
+if ( !class_exists( 'WP_GitHub_Updater' ) ) {
+    require_once plugin_dir_path( __FILE__ ) . 'includes/update-plugin/updater.php';
+}
+
+if ( class_exists( 'WP_GitHub_Updater' ) ) {
+    new WP_GitHub_Updater(array(
+        'slug' => plugin_basename(__FILE__), // слаг вашего плагина
+        'proper_folder_name' => 'sitemap-addon', // имя папки плагина
+        'api_url' => 'https://github.com/VsevolodKrasovskyi/sitemap-addon.git', // URL API GitHub
+        'raw_url' => 'https://raw.github.com/VsevolodKrasovskyi/sitemap-addon/master', // URL сырого содержимого репозитория
+        'github_url' => 'https://github.com/VsevolodKrasovskyi/sitemap-addon/tree/main', // URL репозитория на GitHub
+        'zip_url' => 'https://github.com/VsevolodKrasovskyi/sitemap-addon/zipball/master', // URL zip-архива
+        'sslverify' => true, // проверка SSL
+        'requires' => '3.0', // минимальная версия WordPress
+        'tested' => '5.8', // протестированная версия WordPress
+        'readme' => 'README.md', // файл readme
+        'access_token' => '', // токен доступа, если репозиторий приватный
+    ));
 }
 
 
-$updateChecker = Puc_v4_Factory::buildUpdateChecker(
-    'https://github.com/VsevolodKrasovskyi/sitemap-addon.git', 
-    __FILE__, 
-    'addon-wp-sitemap'
-);
+
 
 // Ensure that the parent plugin is active
 if (in_array('wp-sitemap-page/wp-sitemap-page.php', apply_filters('active_plugins', get_option('active_plugins')))) {
