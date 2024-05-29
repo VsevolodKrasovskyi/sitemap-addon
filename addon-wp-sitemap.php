@@ -16,7 +16,6 @@ if ( class_exists( 'WP_GitHub_Updater' ) ) {
     new WP_GitHub_Updater(array(
         'slug' => plugin_basename(__FILE__), // слаг вашего плагина
         'proper_folder_name' => 'sitemap-addon', // имя папки плагина
-        'proper_folder_name' => 'sitemap-addon-main', // имя папки плагина
         'api_url' => 'https://github.com/VsevolodKrasovskyi/sitemap-addon.git', // URL API GitHub
         'raw_url' => 'https://raw.github.com/VsevolodKrasovskyi/sitemap-addon/master', // URL сырого содержимого репозитория
         'github_url' => 'https://github.com/VsevolodKrasovskyi/sitemap-addon/tree/main', // URL репозитория на GitHub
