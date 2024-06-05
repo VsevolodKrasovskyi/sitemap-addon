@@ -2,7 +2,7 @@
 /*
 Plugin Name: WP Sitemap Addon
 Description: Group pages for your sitemap by simply inserting a simple shortcode [wp_sitemap_group_pages parent="{page_id}"] or [wp_sitemap_parent_no_children]
-Version: 1.4
+Version: 1.3.2
 Author: Netpeak 
 Author URI: https://netpeak.bg
 */
