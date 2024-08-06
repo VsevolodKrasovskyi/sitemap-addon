@@ -28,6 +28,28 @@ if ( class_exists( 'WP_GitHub_Updater' ) ) {
     ));
 }
 
+function render_update_button() {
+    echo '<button id="check-updates" class="button">Check for Updates</button>';
+}
+add_action('admin_menu', 'render_update_button');
+
+
+function check_updates() {
+    // Add your update checking logic here
+    // For demonstration, we'll just return a simple message
+    $response = 'No updates found';
+    echo $response;
+    wp_die(); // This is required to terminate immediately and return a proper response
+}
+add_action('wp_ajax_check_updates', 'check_updates');
+
+
+
+function enqueue_update_script() {
+    wp_enqueue_script('update-script', plugins_url('/includes/update-script.js', __FILE__), array('jquery'), null, true);
+}
+add_action('admin_enqueue_scripts', 'enqueue_update_script');
+
 
 
 
