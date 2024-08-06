@@ -28,20 +28,46 @@ if ( class_exists( 'WP_GitHub_Updater' ) ) {
     ));
 }
 
-function wp_sitemap_addon_settings_page() {
-    ?>
-    <div class="wrap">
-        <h1>WP Sitemap Addon</h1>
-        <button id="check-updates" class="button">Check update</button>
-    </div>
-    <?php
+function wp_sitemap_addon_plugin_meta($links, $file) {
+    if (strpos($file, 'sitemap-addon/sitemap-addon.php') !== false) {
+        $new_links = array(
+            '<a href="#" id="check-updates-link">Check update</a>',
+        );
+        $links = array_merge($links, $new_links);
+    }
+    return $links;
 }
+add_filter('plugin_row_meta', 'wp_sitemap_addon_plugin_meta', 10, 2);
+
 
 
 function wp_sitemap_addon_check_updates() {
-    // Логика проверки обновлений
-    $response = 'Обновлений не найдено';
+    $response = 'No updates found';
     echo $response;
+    wp_die();
+}
+add_action('wp_ajax_check_updates', 'wp_sitemap_addon_check_updates');
+
+
+function wp_sitemap_addon_check_updates() {
+    $url = 'https://api.github.com/repos/VsevolodKrasovskyi/sitemap-addon/releases/latest';
+    $response = wp_remote_get($url, array(
+        'headers' => array(
+            'User-Agent' => 'WordPress/' . get_bloginfo('version') . '; ' . get_bloginfo('url')
+        )
+    ));
+
+    if (is_wp_error($response)) {
+        echo 'Error when checking for updates';
+    } else {
+        $body = wp_remote_retrieve_body($response);
+        $data = json_decode($body);
+        if (isset($data->tag_name)) {
+            echo 'Latest version: ' . $data->tag_name;
+        } else {
+            echo 'Failed to retrieve update information';
+        }
+    }
     wp_die();
 }
 add_action('wp_ajax_check_updates', 'wp_sitemap_addon_check_updates');
