@@ -28,20 +28,24 @@ if ( class_exists( 'WP_GitHub_Updater' ) ) {
     ));
 }
 
-function render_update_button() {
-    echo '<button id="check-updates" class="button">Check for Updates</button>';
+function wp_sitemap_addon_settings_page() {
+    ?>
+    <div class="wrap">
+        <h1>WP Sitemap Addon</h1>
+        <button id="check-updates" class="button">Check update</button>
+    </div>
+    <?php
 }
-add_action('admin_menu', 'render_update_button');
 
 
-function check_updates() {
-    // Add your update checking logic here
-    // For demonstration, we'll just return a simple message
-    $response = 'No updates found';
+function wp_sitemap_addon_check_updates() {
+    // Логика проверки обновлений
+    $response = 'Обновлений не найдено';
     echo $response;
-    wp_die(); // This is required to terminate immediately and return a proper response
+    wp_die();
 }
-add_action('wp_ajax_check_updates', 'check_updates');
+add_action('wp_ajax_check_updates', 'wp_sitemap_addon_check_updates');
+
 
 
 
