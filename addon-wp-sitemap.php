@@ -5,6 +5,7 @@ Description: Group pages for your sitemap by simply inserting a simple shortcode
 Version: 1.3.4
 Author: Netpeak 
 Text Domain: wp-sitemap-addon
+Requires Plugins: wp-sitemap-page
 Author URI: https://netpeak.bg
 */
 
